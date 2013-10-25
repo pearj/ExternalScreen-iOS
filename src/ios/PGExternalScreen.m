@@ -27,11 +27,6 @@ NSString* WEBVIEW_UNAVAILABLE = @"External Web View Unavailable";
 NSString* WEBVIEW_OK = @"OK";
 NSString* SCREEN_NOTIFICATION_HANDLERS_OK =@"External screen notification handlers initialized";
 
-//used to load an HTML file in external screen web view
-//- (void) loadHTMLResource:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options
-//{
-//    NSString* callbackId = [arguments objectAtIndex:0];
-
 - (void) loadHTMLResource:(CDVInvokedUrlCommand*)command
 {
     NSString* callbackId = command.callbackId;
@@ -41,7 +36,7 @@ NSString* SCREEN_NOTIFICATION_HANDLERS_OK =@"External screen notification handle
     if (webView)
     {
         
-        NSString *stringObtainedFromJavascript = [arguments objectAtIndex:1];
+        NSString *stringObtainedFromJavascript = [arguments objectAtIndex:0];
         //[stringObtainedFromJavascript retain];
         
         NSRange textRange;
@@ -88,11 +83,6 @@ NSString* SCREEN_NOTIFICATION_HANDLERS_OK =@"External screen notification handle
     }
 }
 
-//used to load an HTML string in external screen web view
-//- (void) loadHTML:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options
-//{    
-//    NSString* callbackId = [arguments objectAtIndex:0];
-
 - (void) loadHTML:(CDVInvokedUrlCommand*)command
 {
     NSString* callbackId = command.callbackId;
@@ -101,7 +91,7 @@ NSString* SCREEN_NOTIFICATION_HANDLERS_OK =@"External screen notification handle
     
     if (webView)
     {
-        NSString *stringObtainedFromJavascript = [arguments objectAtIndex:1]; 
+        NSString *stringObtainedFromJavascript = [arguments objectAtIndex:0]; 
         //[stringObtainedFromJavascript retain];
         [webView loadHTMLString:stringObtainedFromJavascript baseURL:baseURL];
         //[stringObtainedFromJavascript release];
@@ -117,11 +107,6 @@ NSString* SCREEN_NOTIFICATION_HANDLERS_OK =@"External screen notification handle
     
 }
 
-
-//used to invoke javascript in external screen web view
-//- (void) invokeJavaScript:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options
-//{ 
-//    NSString* callbackId = [arguments objectAtIndex:0];
 - (void) invokeJavaScript:(CDVInvokedUrlCommand*)command
 {
     NSString* callbackId = command.callbackId;
@@ -130,7 +115,7 @@ NSString* SCREEN_NOTIFICATION_HANDLERS_OK =@"External screen notification handle
     
     if (webView)
     {
-        NSString *stringObtainedFromJavascript = [arguments objectAtIndex:1]; 
+        NSString *stringObtainedFromJavascript = [arguments objectAtIndex:0]; 
         //[stringObtainedFromJavascript retain];
         [webView stringByEvaluatingJavaScriptFromString: stringObtainedFromJavascript];
         //[stringObtainedFromJavascript release];
@@ -145,11 +130,6 @@ NSString* SCREEN_NOTIFICATION_HANDLERS_OK =@"External screen notification handle
     }
     
 }
-
-//used to initialize monitoring of external screen
-//- (void)setupScreenConnectionNotificationHandlers:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options 
-//{
-//    NSString* callbackId = [arguments objectAtIndex:0];
 
 - (void) setupScreenConnectionNotificationHandlers:(CDVInvokedUrlCommand*)command
 {
@@ -169,10 +149,6 @@ NSString* SCREEN_NOTIFICATION_HANDLERS_OK =@"External screen notification handle
     [self writeJavascript: [pluginResult toSuccessCallbackString:callbackId]];
 }
 
-//used to determine if an external screen is available
-//- (void) checkExternalScreenAvailable:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options 
-//{
-//    NSString* callbackId = [arguments objectAtIndex:0];
 - (void) checkExternalScreenAvailable:(CDVInvokedUrlCommand*)command
 {
     NSString* callbackId = command.callbackId;
@@ -224,8 +200,8 @@ NSString* SCREEN_NOTIFICATION_HANDLERS_OK =@"External screen notification handle
 {
     if ([[UIScreen screens] count] > 1) {
         
-		// Internal display is 0, external is 1.
-		//externalScreen = [[[UIScreen screens] objectAtIndex:1] retain];
+	// Internal display is 0, external is 1.
+	//externalScreen = [[[UIScreen screens] objectAtIndex:1] retain];
         externalScreen = [[UIScreen screens] objectAtIndex:1];
         
         CGRect        screenBounds = externalScreen.bounds;
@@ -237,14 +213,11 @@ NSString* SCREEN_NOTIFICATION_HANDLERS_OK =@"External screen notification handle
         externalWindow.clipsToBounds = YES;
         
         webView = [[UIWebView alloc] initWithFrame:screenBounds];
-//        [webView retain];
         
         baseURLAddress = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"www"];
-//        [baseURLAddress retain];
         
         baseURL = [NSURL URLWithString:baseURLAddress];
-//        [baseURL retain];
-        
+
         [webView loadHTMLString:@"loading..." baseURL:baseURL];
         
         [externalWindow addSubview:webView];
