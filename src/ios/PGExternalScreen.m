@@ -34,7 +34,7 @@ NSString* SCREEN_NOTIFICATION_HANDLERS_OK =@"External screen notification handle
 
 - (void) loadHTMLResource:(CDVInvokedUrlCommand*)command
 {
-    self.callbackId = command.callbackId;
+    NSString* callbackId = command.callbackId;
     NSArray *arguments = command.arguments;
     NSDictionary *options = [arguments objectAtIndex:0];
 
@@ -97,7 +97,7 @@ NSString* SCREEN_NOTIFICATION_HANDLERS_OK =@"External screen notification handle
 
 - (void) loadHTML:(CDVInvokedUrlCommand*)command
 {
-    self.callbackId = command.callbackId;
+    NSString* callbackId = command.callbackId;
     NSArray *arguments = command.arguments;
     NSDictionary *options = [arguments objectAtIndex:0];
 
@@ -128,7 +128,7 @@ NSString* SCREEN_NOTIFICATION_HANDLERS_OK =@"External screen notification handle
 //    NSString* callbackId = [arguments objectAtIndex:0];
 - (void) invokeJavaScript:(CDVInvokedUrlCommand*)command
 {
-    self.callbackId = command.callbackId;
+    NSString* callbackId = command.callbackId;
     NSArray *arguments = command.arguments;
     NSDictionary *options = [arguments objectAtIndex:0];
 
@@ -159,7 +159,7 @@ NSString* SCREEN_NOTIFICATION_HANDLERS_OK =@"External screen notification handle
 
 - (void) setupScreenConnectionNotificationHandlers:(CDVInvokedUrlCommand*)command
 {
-    self.callbackId = command.callbackId;
+    NSString* callbackId = command.callbackId;
     NSArray *arguments = command.arguments;
     NSDictionary *options = [arguments objectAtIndex:0];
     
@@ -183,7 +183,7 @@ NSString* SCREEN_NOTIFICATION_HANDLERS_OK =@"External screen notification handle
 //    NSString* callbackId = [arguments objectAtIndex:0];
 - (void) checkExternalScreenAvailable:(CDVInvokedUrlCommand*)command
 {
-    self.callbackId = command.callbackId;
+    NSString* callbackId = command.callbackId;
     NSArray *arguments = command.arguments;
     NSDictionary *options = [arguments objectAtIndex:0];
     
