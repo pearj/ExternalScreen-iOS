@@ -35,8 +35,6 @@ NSString* SCREEN_NOTIFICATION_HANDLERS_OK =@"External screen notification handle
 - (void) loadHTMLResource:(CDVInvokedUrlCommand*)command
 {
     NSString* callbackId = command.callbackId;
-    NSArray *arguments = command.arguments;
-    NSDictionary *options = [arguments objectAtIndex:0];
 
     CDVPluginResult* pluginResult;
     
@@ -98,8 +96,6 @@ NSString* SCREEN_NOTIFICATION_HANDLERS_OK =@"External screen notification handle
 - (void) loadHTML:(CDVInvokedUrlCommand*)command
 {
     NSString* callbackId = command.callbackId;
-    NSArray *arguments = command.arguments;
-    NSDictionary *options = [arguments objectAtIndex:0];
 
     CDVPluginResult* pluginResult;
     
@@ -129,8 +125,6 @@ NSString* SCREEN_NOTIFICATION_HANDLERS_OK =@"External screen notification handle
 - (void) invokeJavaScript:(CDVInvokedUrlCommand*)command
 {
     NSString* callbackId = command.callbackId;
-    NSArray *arguments = command.arguments;
-    NSDictionary *options = [arguments objectAtIndex:0];
 
     CDVPluginResult* pluginResult;
     
@@ -160,8 +154,6 @@ NSString* SCREEN_NOTIFICATION_HANDLERS_OK =@"External screen notification handle
 - (void) setupScreenConnectionNotificationHandlers:(CDVInvokedUrlCommand*)command
 {
     NSString* callbackId = command.callbackId;
-    NSArray *arguments = command.arguments;
-    NSDictionary *options = [arguments objectAtIndex:0];
     
     NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
     
@@ -184,8 +176,6 @@ NSString* SCREEN_NOTIFICATION_HANDLERS_OK =@"External screen notification handle
 - (void) checkExternalScreenAvailable:(CDVInvokedUrlCommand*)command
 {
     NSString* callbackId = command.callbackId;
-    NSArray *arguments = command.arguments;
-    NSDictionary *options = [arguments objectAtIndex:0];
     
     NSString* result = nil;
     if ([[UIScreen screens] count] > 1) {  
