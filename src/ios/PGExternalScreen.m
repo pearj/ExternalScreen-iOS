@@ -36,8 +36,8 @@ NSString* SCREEN_NOTIFICATION_HANDLERS_OK =@"External screen notification handle
     if (webView)
     {
         
-        NSString *stringObtainedFromJavascript = [arguments objectAtIndex:1];  
-        [stringObtainedFromJavascript retain];
+        NSString *stringObtainedFromJavascript = [arguments objectAtIndex:1];
+        //[stringObtainedFromJavascript retain];
         
         NSRange textRange;
         textRange =[[stringObtainedFromJavascript lowercaseString] rangeOfString:@"http://"];
@@ -48,23 +48,23 @@ NSString* SCREEN_NOTIFICATION_HANDLERS_OK =@"External screen notification handle
         if(textRange.location != NSNotFound)
         {
             url = [NSURL URLWithString:stringObtainedFromJavascript];       
-            [url retain];
+            //[url retain];
         }
         //load local resource
         else
         {
             
             NSString* path = [NSString stringWithFormat:@"%@/%@", baseURLAddress, stringObtainedFromJavascript];
-            [path retain];
+            //[path retain];
             url = [NSURL fileURLWithPath:path isDirectory:NO];
-            [url retain];
-            [path release];
+            //[url retain];
+            //[path release];
         }
         NSURLRequest *request = [NSURLRequest requestWithURL:url];
         [webView loadRequest:request];
         
-        [url release];
-        [stringObtainedFromJavascript release];
+        //[url release];
+        //[stringObtainedFromJavascript release];
         
         if(error) {
             pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString: [error localizedDescription]];        
@@ -93,9 +93,9 @@ NSString* SCREEN_NOTIFICATION_HANDLERS_OK =@"External screen notification handle
     if (webView)
     {
         NSString *stringObtainedFromJavascript = [arguments objectAtIndex:1]; 
-        [stringObtainedFromJavascript retain];  
+        //[stringObtainedFromJavascript retain];
         [webView loadHTMLString:stringObtainedFromJavascript baseURL:baseURL];
-        [stringObtainedFromJavascript release];
+        //[stringObtainedFromJavascript release];
         
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString: WEBVIEW_OK];
         [self writeJavascript: [pluginResult toSuccessCallbackString:callbackId]];
@@ -119,9 +119,9 @@ NSString* SCREEN_NOTIFICATION_HANDLERS_OK =@"External screen notification handle
     if (webView)
     {
         NSString *stringObtainedFromJavascript = [arguments objectAtIndex:1]; 
-        [stringObtainedFromJavascript retain];  
+        //[stringObtainedFromJavascript retain];
         [webView stringByEvaluatingJavaScriptFromString: stringObtainedFromJavascript];
-        [stringObtainedFromJavascript release];
+        //[stringObtainedFromJavascript release];
         
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString: WEBVIEW_OK];
         [self writeJavascript: [pluginResult toSuccessCallbackString:callbackId]];
@@ -166,10 +166,10 @@ NSString* SCREEN_NOTIFICATION_HANDLERS_OK =@"External screen notification handle
     {
         result = @"NO";
     }
-    [result retain];
+    //[result retain];
     CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString: result];
     [self writeJavascript: [pluginResult toSuccessCallbackString:callbackId]];
-    [result release];
+    //[result release];
 }
 
 
@@ -189,12 +189,12 @@ NSString* SCREEN_NOTIFICATION_HANDLERS_OK =@"External screen notification handle
     if (externalWindow)
     {
         externalWindow.hidden = YES;
-        [externalWindow release];
+        //[externalWindow release];
         externalWindow = nil;    }
     
     if (webView)
     {
-        [webView release];
+        //[webView release];
         webView = nil;
     }
     
@@ -206,7 +206,8 @@ NSString* SCREEN_NOTIFICATION_HANDLERS_OK =@"External screen notification handle
     if ([[UIScreen screens] count] > 1) {
         
 		// Internal display is 0, external is 1.
-		externalScreen = [[[UIScreen screens] objectAtIndex:1] retain];
+		//externalScreen = [[[UIScreen screens] objectAtIndex:1] retain];
+        externalScreen = [[UIScreen screens] objectAtIndex:1];
         
         CGRect        screenBounds = externalScreen.bounds;
         
@@ -217,13 +218,13 @@ NSString* SCREEN_NOTIFICATION_HANDLERS_OK =@"External screen notification handle
         externalWindow.clipsToBounds = YES;
         
         webView = [[UIWebView alloc] initWithFrame:screenBounds];
-        [webView retain];
+//        [webView retain];
         
         baseURLAddress = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"www"];
-        [baseURLAddress retain];
+//        [baseURLAddress retain];
         
         baseURL = [NSURL URLWithString:baseURLAddress];
-        [baseURL retain];
+//        [baseURL retain];
         
         [webView loadHTMLString:@"loading..." baseURL:baseURL];
         
