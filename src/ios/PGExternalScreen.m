@@ -28,9 +28,16 @@ NSString* WEBVIEW_OK = @"OK";
 NSString* SCREEN_NOTIFICATION_HANDLERS_OK =@"External screen notification handlers initialized";
 
 //used to load an HTML file in external screen web view
-- (void) loadHTMLResource:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options
+//- (void) loadHTMLResource:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options
+//{
+//    NSString* callbackId = [arguments objectAtIndex:0];
+
+- (void) loadHTMLResource:(CDVInvokedUrlCommand*)command
 {
-    NSString* callbackId = [arguments objectAtIndex:0];
+    self.callbackId = command.callbackId;
+    NSArray *arguments = command.arguments;
+    NSDictionary *options = [arguments objectAtIndex:0];
+
     CDVPluginResult* pluginResult;
     
     if (webView)
@@ -84,10 +91,16 @@ NSString* SCREEN_NOTIFICATION_HANDLERS_OK =@"External screen notification handle
 }
 
 //used to load an HTML string in external screen web view
-- (void) loadHTML:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options
+//- (void) loadHTML:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options
+//{    
+//    NSString* callbackId = [arguments objectAtIndex:0];
+
+- (void) loadHTML:(CDVInvokedUrlCommand*)command
 {
-    
-    NSString* callbackId = [arguments objectAtIndex:0];
+    self.callbackId = command.callbackId;
+    NSArray *arguments = command.arguments;
+    NSDictionary *options = [arguments objectAtIndex:0];
+
     CDVPluginResult* pluginResult;
     
     if (webView)
@@ -110,10 +123,15 @@ NSString* SCREEN_NOTIFICATION_HANDLERS_OK =@"External screen notification handle
 
 
 //used to invoke javascript in external screen web view
-- (void) invokeJavaScript:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options
+//- (void) invokeJavaScript:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options
+//{ 
+//    NSString* callbackId = [arguments objectAtIndex:0];
+- (void) invokeJavaScript:(CDVInvokedUrlCommand*)command
 {
-    
-    NSString* callbackId = [arguments objectAtIndex:0];
+    self.callbackId = command.callbackId;
+    NSArray *arguments = command.arguments;
+    NSDictionary *options = [arguments objectAtIndex:0];
+
     CDVPluginResult* pluginResult;
     
     if (webView)
@@ -135,9 +153,15 @@ NSString* SCREEN_NOTIFICATION_HANDLERS_OK =@"External screen notification handle
 }
 
 //used to initialize monitoring of external screen
-- (void)setupScreenConnectionNotificationHandlers:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options 
+//- (void)setupScreenConnectionNotificationHandlers:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options 
+//{
+//    NSString* callbackId = [arguments objectAtIndex:0];
+
+- (void) setupScreenConnectionNotificationHandlers:(CDVInvokedUrlCommand*)command
 {
-    NSString* callbackId = [arguments objectAtIndex:0];
+    self.callbackId = command.callbackId;
+    NSArray *arguments = command.arguments;
+    NSDictionary *options = [arguments objectAtIndex:0];
     
     NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
     
@@ -154,9 +178,14 @@ NSString* SCREEN_NOTIFICATION_HANDLERS_OK =@"External screen notification handle
 }
 
 //used to determine if an external screen is available
-- (void) checkExternalScreenAvailable:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options 
+//- (void) checkExternalScreenAvailable:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options 
+//{
+//    NSString* callbackId = [arguments objectAtIndex:0];
+- (void) checkExternalScreenAvailable:(CDVInvokedUrlCommand*)command
 {
-    NSString* callbackId = [arguments objectAtIndex:0];
+    self.callbackId = command.callbackId;
+    NSArray *arguments = command.arguments;
+    NSDictionary *options = [arguments objectAtIndex:0];
     
     NSString* result = nil;
     if ([[UIScreen screens] count] > 1) {  

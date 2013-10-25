@@ -32,11 +32,16 @@
 
 
 //Public Instance Method (visible in phonegap API)
-- (void) setupScreenConnectionNotificationHandlers:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options ;
-- (void) loadHTMLResource:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options;
-- (void) loadHTML:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options;
-- (void) invokeJavaScript:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options;
-- (void) checkExternalScreenAvailable:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options;
+//- (void) setupScreenConnectionNotificationHandlers:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options ;
+//- (void) loadHTMLResource:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options;
+//- (void) loadHTML:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options;
+//- (void) invokeJavaScript:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options;
+//- (void) checkExternalScreenAvailable:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options;
+- (void) setupScreenConnectionNotificationHandlers:(CDVInvokedUrlCommand*)command;
+- (void) loadHTMLResource:(CDVInvokedUrlCommand*)command;
+- (void) loadHTML:(CDVInvokedUrlCommand*)command;
+- (void) invokeJavaScript:(CDVInvokedUrlCommand*)command;
+- (void) checkExternalScreenAvailable:(CDVInvokedUrlCommand*)command;
 
 
 //Instance Method  
