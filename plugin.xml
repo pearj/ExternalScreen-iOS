@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
-      
-        id="bob.plugins.PGExternalScreen"
-        version="3.2">
+        id="com.tricedesigns.ios.externalscreen"
+        version="1.0">
 
-  <name>ExternalScreen</name>
+  <name>ExternalScreen iOS Plugin</name>
 
   <description>
-    This plugin allows you to sharescreens
+    This plugin allows you to use an external screen on iOS devices using either AirPlay or a VGA cable adapter.
+
+    The external screen uses a UIWebView, that is controlled via Javascript APIs.
   </description>
 
   <license>MIT</license>
