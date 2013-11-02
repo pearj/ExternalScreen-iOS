@@ -27,6 +27,7 @@ NSString* WEBVIEW_UNAVAILABLE = @"External Web View Unavailable";
 NSString* WEBVIEW_OK = @"OK";
 NSString* SCREEN_NOTIFICATION_HANDLERS_OK =@"External screen notification handlers initialized";
 
+//used to load an HTML file in external screen web view
 - (void) loadHTMLResource:(CDVInvokedUrlCommand*)command
 {
     NSString* callbackId = command.callbackId;
@@ -84,6 +85,7 @@ NSString* SCREEN_NOTIFICATION_HANDLERS_OK =@"External screen notification handle
     }
 }
 
+//used to load an HTML string in external screen web view
 - (void) loadHTML:(CDVInvokedUrlCommand*)command
 {
     NSString* callbackId = command.callbackId;
@@ -109,6 +111,7 @@ NSString* SCREEN_NOTIFICATION_HANDLERS_OK =@"External screen notification handle
     
 }
 
+//used to invoke javascript in external screen web view
 - (void) invokeJavaScript:(CDVInvokedUrlCommand*)command
 {
     NSString* callbackId = command.callbackId;
@@ -134,6 +137,7 @@ NSString* SCREEN_NOTIFICATION_HANDLERS_OK =@"External screen notification handle
     
 }
 
+//used to initialize monitoring of external screen
 - (void) setupScreenConnectionNotificationHandlers:(CDVInvokedUrlCommand*)command
 {
     NSString* callbackId = command.callbackId;
@@ -152,6 +156,7 @@ NSString* SCREEN_NOTIFICATION_HANDLERS_OK =@"External screen notification handle
     [self writeJavascript: [pluginResult toSuccessCallbackString:callbackId]];
 }
 
+//used to determine if an external screen is available
 - (void) checkExternalScreenAvailable:(CDVInvokedUrlCommand*)command
 {
     NSString* callbackId = command.callbackId;
