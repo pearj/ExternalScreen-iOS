@@ -25,3 +25,5 @@ with:
 <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
 <script type="text/javascript" src="js/plugins/ExternalScreen.js"></script>
 ```
+
+Additionally a new javascript method has been added called "registerForNotifications", if you call that method it will call the success callback handler with either "connected" or "disconnected" as the first method argument.  This callback handler will be continually called for the life of the application.

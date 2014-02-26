@@ -23,11 +23,13 @@
 
 @interface PGExternalScreen : CDVPlugin {
     
-	UIWindow* externalWindow;
-	UIScreen* externalScreen;
+    UIWindow* externalWindow;
+    UIScreen* externalScreen;
     UIWebView* webView;
     NSString *baseURLAddress;
     NSURL *baseURL;
+    NSString* _callbackId;
+    BOOL screenNeedsInit;
 }
 
 
@@ -42,10 +44,13 @@
 - (void) loadHTML:(CDVInvokedUrlCommand*)command;
 - (void) invokeJavaScript:(CDVInvokedUrlCommand*)command;
 - (void) checkExternalScreenAvailable:(CDVInvokedUrlCommand*)command;
+- (void) registerForNotifications:(CDVInvokedUrlCommand*)command;
 
 
 //Instance Method  
 - (void) attemptSecondScreenView;
 - (void) handleScreenConnectNotification:(NSNotification*)aNotification;
 - (void) handleScreenDisconnectNotification:(NSNotification*)aNotification;
+- (void) makeScreenVisible;
+- (void) sendNotification:(NSString*)message;
 @end

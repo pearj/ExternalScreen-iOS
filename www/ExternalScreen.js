@@ -18,7 +18,9 @@ var PGExternalScreen = {
     
     checkExternalScreenAvailable: function (success, fail) {
         return cordova.exec(success, fail, "PGExternalScreen", "checkExternalScreenAvailable", []);
+    },
+
+    registerForNotifications: function (success, fail) {
+        return cordova.exec(success, fail, "PGExternalScreen", "registerForNotifications", []);
     }
-
-
 };

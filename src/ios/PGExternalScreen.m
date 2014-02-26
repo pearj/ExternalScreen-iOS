@@ -26,6 +26,8 @@
 NSString* WEBVIEW_UNAVAILABLE = @"External Web View Unavailable";
 NSString* WEBVIEW_OK = @"OK";
 NSString* SCREEN_NOTIFICATION_HANDLERS_OK =@"External screen notification handlers initialized";
+NSString* SCREEN_CONNECTED =@"connected";
+NSString* SCREEN_DISCONNECTED =@"disconnected";
 
 //used to load an HTML file in external screen web view
 - (void) loadHTMLResource:(CDVInvokedUrlCommand*)command
@@ -39,7 +41,7 @@ NSString* SCREEN_NOTIFICATION_HANDLERS_OK =@"External screen notification handle
     {
         
         NSString *stringObtainedFromJavascript = [arguments objectAtIndex:0];
-        //[stringObtainedFromJavascript retain];
+
         
         NSRange textRange;
         textRange =[[stringObtainedFromJavascript lowercaseString] rangeOfString:@"http://"];
@@ -74,6 +76,10 @@ NSString* SCREEN_NOTIFICATION_HANDLERS_OK =@"External screen notification handle
         }  
         else
         {
+            if (screenNeedsInit) {
+                [self makeScreenVisible];
+            }
+
             pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString: WEBVIEW_OK];
             [self writeJavascript: [pluginResult toSuccessCallbackString:callbackId]];
         }
@@ -100,6 +106,10 @@ NSString* SCREEN_NOTIFICATION_HANDLERS_OK =@"External screen notification handle
         [webView loadHTMLString:stringObtainedFromJavascript baseURL:baseURL];
         //[stringObtainedFromJavascript release];
         
+        if (screenNeedsInit) {
+            [self makeScreenVisible];
+        }
+
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString: WEBVIEW_OK];
         [self writeJavascript: [pluginResult toSuccessCallbackString:callbackId]];
     }
@@ -175,6 +185,11 @@ NSString* SCREEN_NOTIFICATION_HANDLERS_OK =@"External screen notification handle
     //[result release];
 }
 
+// Register the callbackId which will be a persistent callback that will be invoked when the screen connection status changes.
+- (void) registerForNotifications:(CDVInvokedUrlCommand*)command
+{
+    _callbackId = command.callbackId;
+}
 
 
 //invoked when an additional screen is connected to iOS device (VGA or Airplay)
@@ -201,6 +216,10 @@ NSString* SCREEN_NOTIFICATION_HANDLERS_OK =@"External screen notification handle
         webView = nil;
     }
     
+    if (_callbackId) {
+        // Send notification
+        [self sendNotification:SCREEN_DISCONNECTED];
+    }
 }
 
 
@@ -208,8 +227,8 @@ NSString* SCREEN_NOTIFICATION_HANDLERS_OK =@"External screen notification handle
 {
     if ([[UIScreen screens] count] > 1) {
         
-	// Internal display is 0, external is 1.
-	//externalScreen = [[[UIScreen screens] objectAtIndex:1] retain];
+    // Internal display is 0, external is 1.
+    //externalScreen = [[[UIScreen screens] objectAtIndex:1] retain];
         externalScreen = [[UIScreen screens] objectAtIndex:1];
         
         CGRect        screenBounds = externalScreen.bounds;
@@ -221,16 +240,23 @@ NSString* SCREEN_NOTIFICATION_HANDLERS_OK =@"External screen notification handle
         externalWindow.clipsToBounds = YES;
         
         webView = [[UIWebView alloc] initWithFrame:screenBounds];
-        
+
         baseURLAddress = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"www"];
         
         baseURL = [NSURL URLWithString:baseURLAddress];
 
-        [webView loadHTMLString:@"loading..." baseURL:baseURL];
-        
-        [externalWindow addSubview:webView];
-        [externalWindow makeKeyAndVisible];
-        externalWindow.hidden = NO;
+        // If we have a callback we don't want to initialise the screen with a loading message, instead notify javascript and make visible later.
+        if (_callbackId) {
+            screenNeedsInit = YES;
+
+            // Send notification
+            [self sendNotification:SCREEN_CONNECTED];
+        }
+        else {
+            [webView loadHTMLString:@"loading..." baseURL:baseURL];
+
+            [self makeScreenVisible];
+        }
     }
     else
     {
@@ -238,5 +264,22 @@ NSString* SCREEN_NOTIFICATION_HANDLERS_OK =@"External screen notification handle
     }
 }
 
+// Make the second screen visible.
+- (void) makeScreenVisible
+{
+    [externalWindow addSubview:webView];
+    [externalWindow makeKeyAndVisible];
+    externalWindow.hidden = NO;
+    screenNeedsInit = NO;
+}
+
+// Let javascript know that the screen connection status has changed.
+- (void) sendNotification:(NSString*)message
+{
+    CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString: message];
+
+    [result setKeepCallbackAsBool:YES];
+    [self.commandDelegate sendPluginResult:result callbackId:_callbackId];
+}
 
 @end
