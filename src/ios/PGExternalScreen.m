@@ -248,6 +248,10 @@ NSString* SCREEN_DISCONNECTED =@"disconnected";
         // If we have a callback we don't want to initialise the screen with a loading message, instead notify javascript and make visible later.
         if (_callbackId) {
             screenNeedsInit = YES;
+            
+            // Since we have a callback we're going to assume that content is about to be loaded so we probably want a black background
+            [webView setBackgroundColor:[UIColor blackColor]];
+            
 
             // Send notification
             [self sendNotification:SCREEN_CONNECTED];
