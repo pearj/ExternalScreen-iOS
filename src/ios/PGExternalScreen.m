@@ -251,7 +251,6 @@ NSString* SCREEN_DISCONNECTED =@"disconnected";
             
             // Since we have a callback we're going to assume that content is about to be loaded so we probably want a black background
             [webView setBackgroundColor:[UIColor blackColor]];
-            
 
             // Send notification
             [self sendNotification:SCREEN_CONNECTED];
