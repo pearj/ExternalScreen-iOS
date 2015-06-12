@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
-        id="com.tricedesigns.ios.externalscreen"
-        version="1.1.1">
+        id="fr.littleworkshop.externalscreen"
+        version="1.2.1">
 
-  <name>ExternalScreen iOS Plugin</name>
+  <name>ExternalScreen iOS</name>
 
   <description>
     This plugin allows you to use an external screen on iOS devices using either AirPlay or a VGA cable adapter.
 
     The external screen uses a UIWebView, that is controlled via Javascript APIs.
+
+    This plugin is originally by Andrew Trice and has been ported/enhanced for PhoneGap 3.0 plugman by pearj and mxparajuli.
   </description>
 
   <license>MIT</license>
