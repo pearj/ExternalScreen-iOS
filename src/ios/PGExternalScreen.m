@@ -191,6 +191,23 @@ NSString* SCREEN_DISCONNECTED =@"disconnected";
     _callbackId = command.callbackId;
 }
 
+// Show external screen web view
+- (void) showSecondScreen:(CDVInvokedUrlCommand*)command
+{
+    if (!externalWindow)
+    {
+        [self attemptSecondScreenView];
+    } else {
+        externalWindow.hidden = NO;
+    }
+}
+
+// Hide external screen web view
+- (void) hideSecondScreen:(CDVInvokedUrlCommand*)command
+{
+    externalWindow.hidden = YES;
+}
+
 
 //invoked when an additional screen is connected to iOS device (VGA or Airplay)
 - (void)handleScreenConnectNotification:(NSNotification*)aNotification

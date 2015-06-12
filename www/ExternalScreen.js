@@ -22,5 +22,13 @@ var PGExternalScreen = {
 
     registerForNotifications: function (success, fail) {
         return cordova.exec(success, fail, "PGExternalScreen", "registerForNotifications", []);
+    },
+
+    showSecondScreen: function (success, fail) {
+        return cordova.exec(success, fail, "PGExternalScreen", "showSecondScreen", []);
+    },
+
+    hideSecondScreen: function (success, fail) {
+        return cordova.exec(success, fail, "PGExternalScreen", "hideSecondScreen", []);
     }
 };
