@@ -1,6 +1,7 @@
-# PhoneGap iOS ExternalScreen Plugin
+# Cordova iOS ExternalScreen Plugin
 
 This plugin is originally by [Andrew Trice](http://www.tricedesigns.com/) and has been ported/enhanced for PhoneGap 3.0 plugman by [pearj](https://github.com/pearj) and [mxparajuli](https://github.com/mxparajuli).
+
 It was updated for Cordova 6.x by [Matthijs Bierman](https://github.com/matthijsbierman) / [Geckotech](http://www.geckotech.nl).
 
 ## 1. Description
