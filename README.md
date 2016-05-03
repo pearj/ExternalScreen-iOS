@@ -56,15 +56,19 @@ ExternalScreen.invokeJavaScript("document.getElementById('customElement').textCo
 
 Remember that the script needs to be serialized to a string. Any values you pass should also be serialized before calling ```invokeJavaScript()```.
 
-##### Show screen
-
-```
-ExternalScreen.show();
-```
-
 ##### Hide screen
 
 
 ```
 ExternalScreen.hide();
 ```
+
+It will simply blank the second screen. You can keep invoking scripts on the second page, and state will be kept as the underlying ```UIView``` is not destroyed.
+
+
+##### Show screen
+
+```
+ExternalScreen.show();
+```
+Will show a screen again, after calling ```ExternalScreen.hide()```.
