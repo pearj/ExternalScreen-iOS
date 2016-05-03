@@ -21,7 +21,7 @@
 #import <Cordova/CDV.h>
 
 
-@interface PGExternalScreen : CDVPlugin {
+@interface CDVExternalScreen : CDVPlugin {
     
     UIWindow* externalWindow;
     UIScreen* externalScreen;

@@ -1,36 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
-        id="fr.littleworkshop.externalscreen"
-        version="1.2.1">
+        id="nl.geckotech.cordova.plugins.external-screen"
+        version="1.0.0">
 
   <name>ExternalScreen iOS</name>
 
   <description>
     This plugin allows you to use an external screen on iOS devices using either AirPlay or a VGA cable adapter.
-
     The external screen uses a UIWebView, that is controlled via Javascript APIs.
-
-    This plugin is originally by Andrew Trice and has been ported/enhanced for PhoneGap 3.0 plugman by pearj and mxparajuli.
+    This plugin is originally by Andrew Trice.
+    Ported/enhanced for PhoneGap 3.0 plugman by pearj and mxparajuli.
+    Updated for Cordova 6.x by matthijsbierman.
   </description>
 
   <license>MIT</license>
 
-  <engines>
-    <engine name="cordova" version=">=3.0.0"/>
-  </engines>
-
-  <asset src="www/ExternalScreen.js" target="js/plugins/ExternalScreen.js"/>
+  <js-module src="www/external-screen.js" name="ExternalScreen">
+    <clobbers target="ExternalScreen" />
+  </js-module>
 
   <!-- ios -->
   <platform name="ios">
-
     <config-file target="config.xml" parent="/*">
-      <feature name="PGExternalScreen">
-        <param name="ios-package" value="PGExternalScreen"/>
+      <feature name="CDVExternalScreen">
+        <param name="ios-package" value="CDVExternalScreen"/>
       </feature>
     </config-file>
-
-    <header-file src="src/ios/PGExternalScreen.h"/>
-    <source-file src="src/ios/PGExternalScreen.m"/>
+    <header-file src="src/ios/CDVExternalScreen.h"/>
+    <source-file src="src/ios/CDVExternalScreen.m"/>
   </platform>
 </plugin>
