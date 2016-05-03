@@ -2,8 +2,8 @@ var exec = cordova.require('cordova/exec');
 
 var ExternalScreen = {
     
-    setupScreenConnectionNotificationHandlers: function (success, fail) {
-        return exec(success, fail, "CDVExternalScreen", "setupScreenConnectionNotificationHandlers", []);
+    addEventListener: function (success, fail) {
+        return exec(success, fail, "CDVExternalScreen", "addEventListener", []);
     },
     
     loadHTMLResource: function (url, success, fail) {
@@ -20,10 +20,6 @@ var ExternalScreen = {
     
     checkExternalScreenAvailable: function (success, fail) {
         return exec(success, fail, "CDVExternalScreen", "checkExternalScreenAvailable", []);
-    },
-
-    registerForNotifications: function (success, fail) {
-        return exec(success, fail, "CDVExternalScreen", "registerForNotifications", []);
     },
 
     showSecondScreen: function (success, fail) {

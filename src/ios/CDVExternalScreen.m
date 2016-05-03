@@ -138,8 +138,8 @@ NSString* SCREEN_DISCONNECTED =@"disconnected";
     
 }
 
-//used to initialize monitoring of external screen
-- (void) setupScreenConnectionNotificationHandlers:(CDVInvokedUrlCommand*)command
+//listen to events when screen is (dis)connected
+- (void) addEventListener:(CDVInvokedUrlCommand*)command
 {
     NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
     
@@ -147,12 +147,9 @@ NSString* SCREEN_DISCONNECTED =@"disconnected";
                    name:UIScreenDidConnectNotification object:nil];
     [center addObserver:self selector:@selector(handleScreenDisconnectNotification:)
                    name:UIScreenDidDisconnectNotification object:nil];
-    
+
+    _callbackId = command.callbackId;
     [self attemptSecondScreenView];
-    
-    CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString: SCREEN_NOTIFICATION_HANDLERS_OK];
-    
-    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 }
 
 //used to determine if an external screen is available
@@ -171,12 +168,6 @@ NSString* SCREEN_DISCONNECTED =@"disconnected";
     CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString: result];
     //[result release];
     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
-}
-
-// Register the callbackId which will be a persistent callback that will be invoked when the screen connection status changes.
-- (void) registerForNotifications:(CDVInvokedUrlCommand*)command
-{
-    _callbackId = command.callbackId;
 }
 
 // Show external screen web view

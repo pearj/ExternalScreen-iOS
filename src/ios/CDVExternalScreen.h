@@ -39,12 +39,11 @@
 //- (void) loadHTML:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options;
 //- (void) invokeJavaScript:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options;
 //- (void) checkExternalScreenAvailable:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options;
-- (void) setupScreenConnectionNotificationHandlers:(CDVInvokedUrlCommand*)command;
+- (void) addEventListener:(CDVInvokedUrlCommand*)command;
 - (void) loadHTMLResource:(CDVInvokedUrlCommand*)command;
 - (void) loadHTML:(CDVInvokedUrlCommand*)command;
 - (void) invokeJavaScript:(CDVInvokedUrlCommand*)command;
 - (void) checkExternalScreenAvailable:(CDVInvokedUrlCommand*)command;
-- (void) registerForNotifications:(CDVInvokedUrlCommand*)command;
 - (void) showSecondScreen:(CDVInvokedUrlCommand*)command;
 - (void) hideSecondScreen:(CDVInvokedUrlCommand*)command;
 
