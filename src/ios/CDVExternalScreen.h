@@ -44,8 +44,8 @@
 - (void) loadHTML:(CDVInvokedUrlCommand*)command;
 - (void) invokeJavaScript:(CDVInvokedUrlCommand*)command;
 - (void) checkExternalScreenAvailable:(CDVInvokedUrlCommand*)command;
-- (void) showSecondScreen:(CDVInvokedUrlCommand*)command;
-- (void) hideSecondScreen:(CDVInvokedUrlCommand*)command;
+- (void) show:(CDVInvokedUrlCommand*)command;
+- (void) hide:(CDVInvokedUrlCommand*)command;
 
 //Instance Method  
 - (void) attemptSecondScreenView;

@@ -171,7 +171,7 @@ NSString* SCREEN_DISCONNECTED =@"disconnected";
 }
 
 // Show external screen web view
-- (void) showSecondScreen:(CDVInvokedUrlCommand*)command
+- (void) show:(CDVInvokedUrlCommand*)command
 {
     if (!externalWindow)
     {
@@ -182,7 +182,7 @@ NSString* SCREEN_DISCONNECTED =@"disconnected";
 }
 
 // Hide external screen web view
-- (void) hideSecondScreen:(CDVInvokedUrlCommand*)command
+- (void) hide:(CDVInvokedUrlCommand*)command
 {
     externalWindow.hidden = YES;
 }

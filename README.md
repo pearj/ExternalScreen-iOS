@@ -58,4 +58,13 @@ Remember that the script needs to be serialized to a string. Any values you pass
 
 ##### Show screen
 
+```
+ExternalScreen.show();
+```
+
 ##### Hide screen
+
+
+```
+ExternalScreen.hide();
+```

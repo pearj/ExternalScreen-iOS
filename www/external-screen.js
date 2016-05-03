@@ -22,12 +22,12 @@ var ExternalScreen = {
         return exec(success, fail, "CDVExternalScreen", "checkExternalScreenAvailable", []);
     },
 
-    showSecondScreen: function (success, fail) {
-        return exec(success, fail, "CDVExternalScreen", "showSecondScreen", []);
+    show: function (success, fail) {
+        return exec(success, fail, "CDVExternalScreen", "show", []);
     },
 
-    hideSecondScreen: function (success, fail) {
-        return exec(success, fail, "CDVExternalScreen", "hideSecondScreen", []);
+    hide: function (success, fail) {
+        return exec(success, fail, "CDVExternalScreen", "hide", []);
     }
 };
 
