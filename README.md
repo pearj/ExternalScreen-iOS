@@ -15,7 +15,7 @@ The external screen is an UIWebView, that is controlled via Javascript APIs.
 Install the plugin:
 
 ```
-cordova plugin add https://github.com/matthijsbierman/ExternalScreen-iOS
+cordova plugin add https://github.com/geckotechnl/ExternalScreen-iOS
 ```
 
 The plugin is available under the global ```ExternalScreen``` object.

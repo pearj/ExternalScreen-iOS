@@ -1,0 +1,25 @@
+{
+  "name": "ExternalScreen-iOS",
+  "version": "1.1.0",
+  "description": "\n    This plugin allows you to use an external screen on iOS devices using either AirPlay or a VGA cable adapter.\n    The external screen uses a UIWebView, that is controlled via Javascript APIs.\n    This plugin is originally by Andrew Trice.\n    Ported/enhanced for PhoneGap 3.0 plugman by pearj and mxparajuli.\n    Updated for Cordova 6.x by matthijsbierman.\n  ",
+  "cordova": {
+    "id": "nl.geckotech.cordova.plugins.external-screen",
+    "platforms": [
+      "ios"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/matthijsbierman/ExternalScreen-iOS.git"
+  },
+  "keywords": [
+    "ecosystem:cordova",
+    "cordova-ios"
+  ],
+  "author": "matthijs.bierman@geckotech.nl",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/matthijsbierman/ExternalScreen-iOS/issues"
+  },
+  "homepage": "https://github.com/matthijsbierman/ExternalScreen-iOS#readme"
+}
