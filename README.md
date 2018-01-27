@@ -1,6 +1,8 @@
-# PhoneGap iOS ExternalScreen Plugin
+# Cordova iOS ExternalScreen Plugin
 
 This plugin is originally by [Andrew Trice](http://www.tricedesigns.com/) and has been ported/enhanced for PhoneGap 3.0 plugman by [pearj](https://github.com/pearj) and [mxparajuli](https://github.com/mxparajuli).
+
+It was updated for Cordova 6.x by [Matthijs Bierman](https://github.com/matthijsbierman) / [Geckotech](http://www.geckotech.nl).
 
 ## 1. Description
 
@@ -10,20 +12,64 @@ The external screen is an UIWebView, that is controlled via Javascript APIs.
 
 ## 2. Installation and Usage
 
-See Andrew Trice's [original blog post](http://www.tricedesigns.com/2012/01/12/multi-screen-ios-apps-with-phonegap/) to find out how to use this plugin.
+Install the plugin:
 
-His [original samples](https://github.com/triceam/phonegap-plugins/tree/master/iPhone/ExternalScreen/samples) can be used by replacing;
-
-```html
-<script type="text/javascript" charset="utf-8" src="phonegap-1.3.0.js"></script>
-<script type="text/javascript" src="ExternalScreen/ExternalScreen.js"></script>
+```
+cordova plugin add https://github.com/geckotechnl/ExternalScreen-iOS
 ```
 
-with:
+The plugin is available under the global ```ExternalScreen``` object.
 
-```html
-<script type="text/javascript" charset="utf-8" src="cordova.js"></script>
-<script type="text/javascript" src="js/plugins/ExternalScreen.js"></script>
+##### Initialize screen
+
+To create a second screen, you need to listen for when a screen becomes available.
+
+Note that you **cannot** programmatically start the second screen, but need to rely on the user to manually connect AirPlay or the adapter.
+
+When the user chooses to connect an adapter, or mirror using AirPlay you can receive an event:
+
+```javascript
+ExternalScreen.addEventListener(function(status) {
+    switch(status) {
+        case 'connected':
+            ExternalScreen.loadHTMLResource('yourpage.html');
+            break;
+        case 'disconnected':
+            // maybe do something
+            break;
+    }
+});
 ```
 
-Additionally a new javascript method has been added called "registerForNotifications", if you call that method it will call the success callback handler with either "connected" or "disconnected" as the first method argument.  This callback handler will be continually called for the life of the application.
+When a screen is connected, you load a page using:
+
+```
+ExternalScreen.loadHTMLResource('yourpage.html');
+```
+
+##### Execute script
+
+It is also possible to communicate with the external page by sending scripts which will be evaluated:
+
+```
+ExternalScreen.invokeJavaScript("document.getElementById('customElement').textContent = 'example';");
+```
+
+Remember that the script needs to be serialized to a string. Any values you pass should also be serialized before calling ```invokeJavaScript()```.
+
+##### Hide screen
+
+
+```
+ExternalScreen.hide();
+```
+
+It will simply blank the second screen. You can keep invoking scripts on the second page, and state will be kept as the underlying ```UIView``` is not destroyed.
+
+
+##### Show screen
+
+```
+ExternalScreen.show();
+```
+Will show a screen again, after calling ```ExternalScreen.hide()```.

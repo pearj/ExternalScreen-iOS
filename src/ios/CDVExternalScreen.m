@@ -1,6 +1,6 @@
 //
-//  PGExternalScreen.m
-//  MultiScreenPlugin
+//  CDVExternalScreen.m
+//  ExternalScreenPlugin
 //
 //  Created by Andrew Trice on 1/9/12.
 //
@@ -17,10 +17,10 @@
 // ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-#import "PGExternalScreen.h"
+#import "CDVExternalScreen.h"
 
 
-@implementation PGExternalScreen
+@implementation CDVExternalScreen
 
 
 NSString* WEBVIEW_UNAVAILABLE = @"External Web View Unavailable";
@@ -32,7 +32,6 @@ NSString* SCREEN_DISCONNECTED =@"disconnected";
 //used to load an HTML file in external screen web view
 - (void) loadHTMLResource:(CDVInvokedUrlCommand*)command
 {
-    NSString* callbackId = command.callbackId;
     NSArray *arguments = command.arguments;
 
     CDVPluginResult* pluginResult;
@@ -71,30 +70,26 @@ NSString* SCREEN_DISCONNECTED =@"disconnected";
         //[stringObtainedFromJavascript release];
         
         if(error) {
-            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString: [error localizedDescription]];        
-            [self writeJavascript: [pluginResult toErrorCallbackString:callbackId]];    
+            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString: [error localizedDescription]];
         }  
         else
         {
             if (screenNeedsInit) {
                 [self makeScreenVisible];
             }
-
-            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString: WEBVIEW_OK];
-            [self writeJavascript: [pluginResult toSuccessCallbackString:callbackId]];
+            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
         }
     }
     else
     {
-        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString: WEBVIEW_UNAVAILABLE];        
-        [self writeJavascript: [pluginResult toErrorCallbackString:callbackId]];    
+        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString: WEBVIEW_UNAVAILABLE];
     }
+    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 }
 
 //used to load an HTML string in external screen web view
 - (void) loadHTML:(CDVInvokedUrlCommand*)command
 {
-    NSString* callbackId = command.callbackId;
     NSArray *arguments = command.arguments;
 
     CDVPluginResult* pluginResult;
@@ -111,20 +106,18 @@ NSString* SCREEN_DISCONNECTED =@"disconnected";
         }
 
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString: WEBVIEW_OK];
-        [self writeJavascript: [pluginResult toSuccessCallbackString:callbackId]];
     }
     else
     {
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString: WEBVIEW_UNAVAILABLE];        
-        [self writeJavascript: [pluginResult toErrorCallbackString:callbackId]];    
     }
+    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     
 }
 
 //used to invoke javascript in external screen web view
 - (void) invokeJavaScript:(CDVInvokedUrlCommand*)command
 {
-    NSString* callbackId = command.callbackId;
     NSArray *arguments = command.arguments;
 
     CDVPluginResult* pluginResult;
@@ -135,41 +128,33 @@ NSString* SCREEN_DISCONNECTED =@"disconnected";
         //[stringObtainedFromJavascript retain];
         [webView stringByEvaluatingJavaScriptFromString: stringObtainedFromJavascript];
         //[stringObtainedFromJavascript release];
-        
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString: WEBVIEW_OK];
-        [self writeJavascript: [pluginResult toSuccessCallbackString:callbackId]];
     }
     else
     {
-        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString: WEBVIEW_UNAVAILABLE];        
-        [self writeJavascript: [pluginResult toErrorCallbackString:callbackId]];    
+        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString: WEBVIEW_UNAVAILABLE];
     }
+    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     
 }
 
-//used to initialize monitoring of external screen
-- (void) setupScreenConnectionNotificationHandlers:(CDVInvokedUrlCommand*)command
+//listen to events when screen is (dis)connected
+- (void) addEventListener:(CDVInvokedUrlCommand*)command
 {
-    NSString* callbackId = command.callbackId;
-    
     NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
     
     [center addObserver:self selector:@selector(handleScreenConnectNotification:)
                    name:UIScreenDidConnectNotification object:nil];
     [center addObserver:self selector:@selector(handleScreenDisconnectNotification:)
                    name:UIScreenDidDisconnectNotification object:nil];
-    
+
+    _callbackId = command.callbackId;
     [self attemptSecondScreenView];
-    
-    CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString: SCREEN_NOTIFICATION_HANDLERS_OK];
-    
-    [self writeJavascript: [pluginResult toSuccessCallbackString:callbackId]];
 }
 
 //used to determine if an external screen is available
 - (void) checkExternalScreenAvailable:(CDVInvokedUrlCommand*)command
 {
-    NSString* callbackId = command.callbackId;
     
     NSString* result = nil;
     if ([[UIScreen screens] count] > 1) {  
@@ -181,14 +166,25 @@ NSString* SCREEN_DISCONNECTED =@"disconnected";
     }
     //[result retain];
     CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString: result];
-    [self writeJavascript: [pluginResult toSuccessCallbackString:callbackId]];
     //[result release];
+    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 }
 
-// Register the callbackId which will be a persistent callback that will be invoked when the screen connection status changes.
-- (void) registerForNotifications:(CDVInvokedUrlCommand*)command
+// Show external screen web view
+- (void) show:(CDVInvokedUrlCommand*)command
 {
-    _callbackId = command.callbackId;
+    if (!externalWindow)
+    {
+        [self attemptSecondScreenView];
+    } else {
+        externalWindow.hidden = NO;
+    }
+}
+
+// Hide external screen web view
+- (void) hide:(CDVInvokedUrlCommand*)command
+{
+    externalWindow.hidden = YES;
 }
 
 
@@ -286,3 +282,4 @@ NSString* SCREEN_DISCONNECTED =@"disconnected";
 }
 
 @end
+

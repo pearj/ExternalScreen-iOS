@@ -21,7 +21,7 @@
 #import <Cordova/CDV.h>
 
 
-@interface PGExternalScreen : CDVPlugin {
+@interface CDVExternalScreen : CDVPlugin {
     
     UIWindow* externalWindow;
     UIScreen* externalScreen;
@@ -39,13 +39,13 @@
 //- (void) loadHTML:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options;
 //- (void) invokeJavaScript:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options;
 //- (void) checkExternalScreenAvailable:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options;
-- (void) setupScreenConnectionNotificationHandlers:(CDVInvokedUrlCommand*)command;
+- (void) addEventListener:(CDVInvokedUrlCommand*)command;
 - (void) loadHTMLResource:(CDVInvokedUrlCommand*)command;
 - (void) loadHTML:(CDVInvokedUrlCommand*)command;
 - (void) invokeJavaScript:(CDVInvokedUrlCommand*)command;
 - (void) checkExternalScreenAvailable:(CDVInvokedUrlCommand*)command;
-- (void) registerForNotifications:(CDVInvokedUrlCommand*)command;
-
+- (void) show:(CDVInvokedUrlCommand*)command;
+- (void) hide:(CDVInvokedUrlCommand*)command;
 
 //Instance Method  
 - (void) attemptSecondScreenView;
